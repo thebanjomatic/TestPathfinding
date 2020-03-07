@@ -21,6 +21,8 @@ public struct PathNode {
 
     public bool IsInOpenList => (flags & PathNodeFlags.IsInOpenList) != 0;
 
+    public bool IsInClosedList => (flags & PathNodeFlags.IsInClosedList) != 0;
+
     public bool IsBlockedOrClosed => (flags & (PathNodeFlags.IsInClosedList | PathNodeFlags.IsWall)) != 0;
 
     public void SetIsWall(NativeArray<PathNode> pathNodes) {

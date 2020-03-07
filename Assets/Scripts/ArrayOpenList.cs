@@ -7,7 +7,7 @@ public struct ArrayOpenList : IOpenList {
     private NativeList<int> _data;
     private int maxSize;
 
-    public void Initialize(int size) {
+    public void Initialize(int size, int infimum, int supremum) {
         _data = new NativeList<int>(size, Allocator.Temp);
         maxSize = 0;
     }

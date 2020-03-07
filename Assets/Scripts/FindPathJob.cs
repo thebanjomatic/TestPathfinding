@@ -10,6 +10,9 @@ struct FindPathJob<OPENLIST> : IJob where OPENLIST : IOpenList, new() {
     public int2 endPosition;
     public int2 gridSize;
 
+    const int MOVE_STRAIGHT_COST = 10;
+    const int MOVE_DIAGONAL_COST = 14;
+
     public void Execute() {
         var rand = new Unity.Mathematics.Random(42);
 
@@ -55,7 +58,8 @@ struct FindPathJob<OPENLIST> : IJob where OPENLIST : IOpenList, new() {
 
         // var openList = new MinHeapOpenList(pathNodeArray.Length);
         var openList = new OPENLIST();
-        openList.Initialize(pathNodeArray.Length);
+        var supremum = (math.max(gridSize.x, gridSize.y) + 1) * MOVE_DIAGONAL_COST;
+        openList.Initialize(pathNodeArray.Length, 0, supremum);
 
         openList.Enqueue(pathNodeArray, startNode.index);
         pathNodeArray[startNode.index] = startNode;
@@ -143,16 +147,13 @@ struct FindPathJob<OPENLIST> : IJob where OPENLIST : IOpenList, new() {
         int yDistance = math.abs(aPosition.y - bPosition.y);
         int remaining = math.abs(xDistance - yDistance);
 
-        const int MOVE_STRAIGHT_COST = 10;
-        const int MOVE_DIAGONAL_COST = 14;
-
         return MOVE_DIAGONAL_COST * math.min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
     }
 }
 
 
 interface IOpenList : IDisposable {
-    void Initialize(int size);
+    void Initialize(int size, int infimum, int supremum);
     void Enqueue(NativeArray<PathNode> pathNodes, int index);
 
     int DequeueMin(NativeArray<PathNode> pathNodes);
