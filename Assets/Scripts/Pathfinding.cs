@@ -13,23 +13,29 @@ public class Pathfinding : MonoBehaviour {
 
     public TMPro.TMP_Text text1;
     public TMPro.TMP_Text text2;
+    public TMPro.TMP_Text text3;
 
     private Queue<float> times1 = new Queue<float>();
     private Queue<float> times2 = new Queue<float>();
+    private Queue<float> times3 = new Queue<float>();
     private bool spunUp = false;
 
     void Update() {
         times1.Enqueue(Test<ArrayOpenList>());
         times2.Enqueue(Test<MinHeapOpenList>());
+        times3.Enqueue(Test<FasterHeapOpenList>());
+
 
         if (times1.Count > 0 && (times1.Count % 200) == 0) {
             if (!spunUp) {
                 times1.Clear();
                 times2.Clear();
+                times3.Clear();
                 spunUp = true;
-            } else if (text1 && text2 && spunUp) {
-                text1.text = "ArrayOpenList Time: " + times1.Average();
-                text2.text = "MinHeapOpenList Time: " + times2.Average();
+            } else if (spunUp) {
+                text1.text = "Array Time: " + times1.Average();
+                text2.text = "MinHeap Time: " + times2.Average();
+                text3.text = "FasterHeap Time: " + times3.Average();
             }
         }
     }

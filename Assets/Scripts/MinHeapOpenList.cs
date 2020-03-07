@@ -13,8 +13,9 @@ public struct MinHeapOpenList : IOpenList {
     private NativeList<KVP> _data;
     private NativeArray<int> _indexMap;
     private int maxSize;
+    private int existingHitCount;
 
-    public void Initialize(int initialCapacity) {
+    public void Initialize(int initialCapacity, int infimum, int supremum) {
         _data = new NativeList<KVP>(initialCapacity, Allocator.Temp);
         _indexMap = new NativeArray<int>(initialCapacity, Allocator.Temp);
         for (int i = 0; i < initialCapacity; i++) {
@@ -132,6 +133,6 @@ public struct MinHeapOpenList : IOpenList {
     public void Dispose() {
         _data.Dispose();
         _indexMap.Dispose();
-        // Debug.Log("Max OpenList Size: " + maxSize);
+        // Debug.Log("Existing Item Hits: " + existingHitCount);
     }
 }
