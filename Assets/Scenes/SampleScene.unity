@@ -876,7 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text1: {fileID: 1462272142}
   text2: {fileID: 435460790}
-  text3: {fileID: 0}
+  text3: {fileID: 1155632441}
 --- !u!4 &1620134453
 Transform:
   m_ObjectHideFlags: 0
